@@ -39,18 +39,18 @@ export type OutputWithCursor<TData, TCursor extends any = any> = {
   data: TData;
 };
 
-interface TRPCUseQueryBaseOptions extends TRPCRequestOptions {
+export interface TRPCUseQueryBaseOptions extends TRPCRequestOptions {
   /**
    * Opt out of SSR for this query by passing `ssr: false`
    */
   ssr?: boolean;
 }
 
-interface UseTRPCQueryOptions<TPath, TInput, TOutput, TError>
+export interface UseTRPCQueryOptions<TPath, TInput, TOutput, TError>
   extends UseQueryOptions<TOutput, TError, TOutput, [TPath, TInput]>,
     TRPCUseQueryBaseOptions {}
 
-interface UseTRPCInfiniteQueryOptions<TPath, TInput, TOutput, TError>
+export interface UseTRPCInfiniteQueryOptions<TPath, TInput, TOutput, TError>
   extends UseInfiniteQueryOptions<
       TOutput,
       TError,
@@ -60,7 +60,7 @@ interface UseTRPCInfiniteQueryOptions<TPath, TInput, TOutput, TError>
     >,
     TRPCUseQueryBaseOptions {}
 
-interface UseTRPCMutationOptions<TInput, TError, TOutput>
+export interface UseTRPCMutationOptions<TInput, TError, TOutput>
   extends UseMutationOptions<TOutput, TError, TInput>,
     TRPCUseQueryBaseOptions {}
 
@@ -72,7 +72,7 @@ function getClientArgs<TPathAndInput extends unknown[], TOptions>(
   return [path, input, opts] as const;
 }
 
-type inferInfiniteQueryNames<TObj extends ProcedureRecord<any, any, any, any>> =
+export type inferInfiniteQueryNames<TObj extends ProcedureRecord<any, any, any, any>> =
   {
     [TPath in keyof TObj]: inferProcedureInput<TObj[TPath]> extends {
       cursor?: any;
@@ -81,7 +81,7 @@ type inferInfiniteQueryNames<TObj extends ProcedureRecord<any, any, any, any>> =
       : never;
   }[keyof TObj];
 
-type inferProcedures<TObj extends ProcedureRecord<any, any, any, any>> = {
+export type inferProcedures<TObj extends ProcedureRecord<any, any, any, any>> = {
   [TPath in keyof TObj]: {
     input: inferProcedureInput<TObj[TPath]>;
     output: inferProcedureOutput<TObj[TPath]>;
